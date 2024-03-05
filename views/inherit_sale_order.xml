@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherit_view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="request_vendor"/>
+                    <field name="no_kontrak"/>
+                </xpath>     
+
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="with_purchase_order"/>
+                </xpath> 
+
+                <xpath expr="//page[@name='order_lines']" position="after">
+                    <page name="purchase_orders_page" string="Purchase Orders">
+                        <field name="purchase_order_ids">
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//button[@name='action_cancel']" position="after">
+                    <button name="action_create_po" string="Create PO" type="object" class="oe_highlight"
+                        attrs="{'invisible': [('with_purchase_order', '=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_create_po']" position="after">
+                    <button name="open_import_so_lines_wizard" string="Import SO Lines" type="object" class="oe_highlight"/>
+                </xpath>     
+
+                <xpath expr="//button[@name='open_import_so_lines_wizard']" position="after">
+                    <button name="export_sale_order_lines_to_excel" string="Download Excel" type="object" class="oe_highlight"/>
+                </xpath>
+     
+            </field>
+        </record>
+    </data>
+</odoo>
